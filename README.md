@@ -29,30 +29,30 @@ const userSchema = new Schema({
 
 ## Top.model.js
 ```js
-const topSchema = new Schema({
+const topSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
-  owner: { type: Schema.Types.ObjectId, ref: "User" },
+  moviesId: {
+    type: [String],
+    validate: {
+        validator: function (moviesId) {
+          return moviesId.length === 5;
+        },
+        message: "A top must have exactly 5 movies.",
+      }, 
+      required: true,
+  },
 });
+
+
 ```
 ## Comment.model.js
 ```js
 const commentSchema = new Schema({
-  text: { type: String, required: true },
-  topId: { type: Schema.Types.ObjectId, ref: "Top", required: true },
-  topUser: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    content: {type: String, required: true,},
+    topId: { type: Schema.Types.ObjectId, ref: "Top", required: true,},
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true,
 });
 ```
-# MovieId.model.js
-```js
-const movieAPISchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  release_date: { type: Date, required: true },
-  id: { type: Number, required: true, unique: true },
-});
-
-```
-
 
 
 # User Roles
