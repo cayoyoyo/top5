@@ -1,22 +1,22 @@
 Project Image
 ![Project Image](./public/images/top53.jpeg)
 
-## About
+# About
 Welcome to Top5, a web application that allows users to register, create their top 5 favorite movies list, and explore or comment on other users' top lists.
 
-## Deployment
+# Deployment
 You can play the game [here]
 
-## Installation Guide
+# Installation Guide
 Fork this repo
 Clone this repo
 $ cd portfolio-back
 $ npm install
 $ npm start
 
-## Models
+# Models
 
-#User.model.js
+## User.model.js
 
 const userSchema = new Schema({
   username: { type: String, required: false, unique: true, trim: true },
@@ -25,19 +25,16 @@ const userSchema = new Schema({
 });
 
 
-#Top.model.js
-rust
-Copy code
+## Top.model.js
+
 const topSchema = new Schema({
   title: { type: String, required: true },
   movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
   owner: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-# Comment.model.js
+## Comment.model.js
 
-yaml
-Copy code
 const commentSchema = new Schema({
   text: { type: String, required: true },
   topId: { type: Schema.Types.ObjectId, ref: "Top", required: true },
@@ -46,8 +43,6 @@ const commentSchema = new Schema({
 
 # Movie.model.js
 
-javascript
-Copy code
 const movieSchema = new Schema({
   title: { type: String, required: true },
   genre: String,
@@ -59,13 +54,15 @@ const movieSchema = new Schema({
 
 
 
-## User Roles
-- **User**: Can register, login, and manage their top 5 movie list, explore other users' top lists, and leave comments on them.
-- **Admin**: Can access all features of a regular user and perform additional actions, like managing movies in the database.
+# User Roles
+| Role    | Description                                                                                                                                                                  |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User    | Can register, login, and manage their top 5 movie list, explore other users' top lists, and leave comments on them.                                                         |
+| Admin   | Can access all features of a regular user and perform additional actions, like managing movies in the database.                                                             |
 
 
-## User Routes
-## API Endpoints
+# User Routes
+# API Endpoints
 | Method | Endpoint                       | Request Body                        | Response (200)                    | Action                                             |
 | ------ | ------------------------------ | ----------------------------------- | -------------------------------- | -------------------------------------------------- |
 | POST   | /signup                        | { username, email, password }       | -                                | Registers the user in the database.                |
