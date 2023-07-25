@@ -23,6 +23,7 @@ const userSchema = new Schema({
   username: { type: String, required: false, unique: true, trim: true },
   email: { type: String, required: true, unique: true, trim: true, lowercase: true },
   password: { type: String, required: true },
+  isAdmin: Boolean,
 });
 ```
 
@@ -42,15 +43,14 @@ const commentSchema = new Schema({
   topUser: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 ```
-# Movie.model.js
+# MovieId.model.js
 ```js
-const movieSchema = new Schema({
+const movieAPISchema = new mongoose.Schema({
   title: { type: String, required: true },
-  genre: String,
-  releaseYear: Number,
-  rating: Number,
-  poster: String,
+  release_date: { type: Date, required: true },
+  id: { type: Number, required: true, unique: true },
 });
+
 ```
 
 
