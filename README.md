@@ -1,5 +1,5 @@
 Project Image
-![Project Image](/images/top53.jpeg)
+![Project Image](./public/images/top53.jpeg)
 
 ## About
 Welcome to Top5, a web application that allows users to register, create their top 5 favorite movies list, and explore or comment on other users' top lists.
@@ -15,14 +15,17 @@ $ npm install
 $ npm start
 
 ## Models
-The application uses the following models:
+
+#User.model.js
 
 const userSchema = new Schema({
   username: { type: String, required: false, unique: true, trim: true },
   email: { type: String, required: true, unique: true, trim: true, lowercase: true },
   password: { type: String, required: true },
 });
-Top.model.js
+
+
+#Top.model.js
 rust
 Copy code
 const topSchema = new Schema({
@@ -30,7 +33,9 @@ const topSchema = new Schema({
   movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
   owner: { type: Schema.Types.ObjectId, ref: "User" },
 });
-Comment.model.js
+
+# Comment.model.js
+
 yaml
 Copy code
 const commentSchema = new Schema({
@@ -38,7 +43,9 @@ const commentSchema = new Schema({
   topId: { type: Schema.Types.ObjectId, ref: "Top", required: true },
   topUser: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
-Movie.model.js
+
+# Movie.model.js
+
 javascript
 Copy code
 const movieSchema = new Schema({
