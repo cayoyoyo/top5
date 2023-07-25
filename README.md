@@ -2,7 +2,7 @@ Project Image
 ![Project Image](./public/images/top53.jpeg)
 
 # About
-Welcome to Top5, a web application that allows users to register, create their top 5 favorite movies list, and explore or comment on other users' top lists.
+Welcome to top5, a web application that allows users to register, create their top 5 favorite movies list, and explore or comment on other users' top lists.
 
 # Deployment
 You can play the game [here]
@@ -10,10 +10,11 @@ You can play the game [here]
 # Installation Guide
 Fork this repo
 Clone this repo
+```shell
 $ cd portfolio-back
 $ npm install
 $ npm start
-
+```
 # Models
 
 ## User.model.js
