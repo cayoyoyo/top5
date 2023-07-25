@@ -17,32 +17,32 @@ $ npm start
 # Models
 
 ## User.model.js
-
+```js
 const userSchema = new Schema({
   username: { type: String, required: false, unique: true, trim: true },
   email: { type: String, required: true, unique: true, trim: true, lowercase: true },
   password: { type: String, required: true },
 });
-
+```
 
 ## Top.model.js
-
+```js
 const topSchema = new Schema({
   title: { type: String, required: true },
   movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
   owner: { type: Schema.Types.ObjectId, ref: "User" },
 });
-
+```
 ## Comment.model.js
-
+```js
 const commentSchema = new Schema({
   text: { type: String, required: true },
   topId: { type: Schema.Types.ObjectId, ref: "Top", required: true },
   topUser: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
-
+```
 # Movie.model.js
-
+```js
 const movieSchema = new Schema({
   title: { type: String, required: true },
   genre: String,
@@ -50,7 +50,7 @@ const movieSchema = new Schema({
   rating: Number,
   poster: String,
 });
-
+```
 
 
 
