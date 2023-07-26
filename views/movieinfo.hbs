@@ -1,0 +1,14 @@
+ <div class="container mt-5">
+  <h2>Movie Info</h2>
+  {{#if imageUrl}}
+  <img src="{{imageUrl}}" alt="Movie Poster">
+{{/if}}
+  <p>Name: {{movie.title}}</p>
+  <p>Release Year: {{movie.release_date}}</p>
+  {{#if user}}
+    <form action="/add-to-top5" method="POST">
+      <input type="hidden" name="movieId" value="{{movie.id}}">
+      <button type="submit" class="btn btn-primary">Add to Top 5</button>
+    </form>
+  {{/if}}
+</div> 

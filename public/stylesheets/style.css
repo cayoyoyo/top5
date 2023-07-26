@@ -3,16 +3,15 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00b7ff;
-}
 
 h1 {
-  color: 15px;
+  color:rgb(110, 191, 215);
+  font-size: 16px;
 }
 
 .navbar {
-  background-color: #333;
+  /* background-color: #333; */
+  background-color: black;
   overflow: hidden;
 }
 
@@ -36,5 +35,19 @@ h1 {
 }
 
 
+.current-user {
+  float: left; 
+  color: white; 
+  margin: 14px 16px; 
+}
 
+.image-container {
+  display: flex; /* Utilizamos flexbox para centrar la imagen horizontalmente */
+  justify-content: center; /* Centramos horizontalmente los elementos del contenedor */
+  margin: 20px 0; /* Ajustamos el margen para separar el título y el contenedor de la imagen */
+}
 
+.image-container img {
+  max-width: 100%; /* Hacemos que la imagen sea responsive ajustando su tamaño máximo */
+  height: auto; /* Permitimos que la altura se ajuste automáticamente para mantener la proporción */
+}
