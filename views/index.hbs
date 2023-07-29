@@ -8,16 +8,6 @@
     <img src="/images/top53.jpeg" alt="Imagen TOP 5">
     </div>
     {{/unless}}
-     {{#if user}}
-    <form action="/search" method="GET">
-      <div class="mb-3">
-        <label for="movie" class="form-label">Película</label>
-        <input id="movie" type="text" class="form-control" name="movie" />
-      </div>
-      <button type="submit" class="btn btn-primary">Buscar película</button>
-    </form>
-  </div>
-  {{/if}}
 
 
 {{#if movie}}
@@ -41,16 +31,6 @@
 
 
 
-{{#if user.top5}}
-  <div class="container mt-5">
-    <h2>Top 5 Películas de {{user.username}}</h2>
-    <ul>
-      {{#each user.top5}}
-        <li><a href="/movies/{{this.id}}">{{this.title}} ({{this.release_date}})</a></li>
-      {{/each}}
-    </ul>
-  </div>
-{{/if}}
 
 
 

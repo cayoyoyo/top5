@@ -1,40 +1,40 @@
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{{appTitle}}</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-
-  <body>
-
-
- <div class="navbar">
-  <div class="user-info">
-    {{#if user}}
-      <p class="current-user">Current User: {{user.username}}</p>
-      <a href="/auth/logout">Logout</a>
-      <a href="/">My Top</a>
-    {{else}}
-      <a href="/auth/login">Login</a>
-      <a href="/auth/signup">Signup</a>
-      <a href="/">home</a>
-    {{/if}}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>{{appTitle}}</title>
+</head>
+<body>
+  <div class="navbar">
+    {{#if user}} <!-- Check if the user is logged in -->
+      <form action="/search" method="GET" class="search-form">
+        <div class="mb-3">
+          <label for="movie" class="form-label">Find a Movie!</label>
+          <input id="movie" type="text" class="form-control" name="movie" />
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar película</button>
+      </form>
+      {{/if}}
+    <div class="user-info">
+      {{#if user}}
+        <p class="current-user">Current User: {{user.username}}</p>
+        <a href="/auth/logout">Logout</a>
+        <a href="/perfil">Profile</a>
+        <a href="/alltops">All Tops</a>
+      {{else}}
+        <a href="/auth/login">Login</a>
+        <a href="/auth/signup">Signup</a>
+        <a href="/">home</a>
+      {{/if}}
+    </div>
   </div>
-</div>
 
+  {{{body}}}
 
-
-
-
-
-  
-
-    {{{body}}}
-
-    <script src="/js/script.js"></script>
-  </body>
-
+  <script src="/js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
 </html>

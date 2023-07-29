@@ -10,6 +10,7 @@ const saltRounds = 10;
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
+const Top = require("../models/Top.model");
 
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
@@ -53,7 +54,6 @@ router.post("/signup", isLoggedOut, (req, res) => {
   //   });
   //   return;
   // }
-  
 
   // Create a new user - start by hashing the password
   bcrypt
@@ -64,7 +64,14 @@ router.post("/signup", isLoggedOut, (req, res) => {
       return User.create({ username, email, password: hashedPassword });
     })
     .then((user) => {
-      res.redirect("/auth/login");
+      Top.create({ owner: user._id }).then((topCreado) => {
+        User.findByIdAndUpdate(topCreado.owner, { top: topCreado._id }).then(
+          (response) => {
+            console.log(response);
+            res.redirect("/auth/login");
+          }
+        );
+      });
     })
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {

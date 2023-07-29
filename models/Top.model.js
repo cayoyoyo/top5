@@ -1,19 +1,23 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const topSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+const topSchema = new Schema({
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   moviesId: {
     type: [String],
-    validate: {
-        validator: function (moviesId) {
-          return moviesId.length <= 4;
-        },
-        message: "A top must have exactly 5 movies.",
-      }, 
-      required: true,
+    required: true,
   },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
-const Top = mongoose.model("Top", topSchema);
+const Top = model("Top", topSchema);
 
 module.exports = Top;

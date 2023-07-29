@@ -1,21 +1,23 @@
-<div id="login-form">
+<div class="container my-5">
   <h2>Log In</h2>
   <form action="/auth/login" method="POST">
 
-    <label> Username
-      <input type="text" name="username" placeholder="Your username" />
-    </label>
+    <div class="form-group mb-3">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" placeholder="Your username" />
+    </div>
 
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
+   <div class="form-group mb-3">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" name="email" placeholder="Your email" />
+    </div> 
 
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
+    <div class="form-group mb-3">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" placeholder="Your password" />
+    </div>
 
-    <button type="submit">Log In</button>
-
+    <button type="submit" class="btn btn-primary">Log In</button>
 
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>

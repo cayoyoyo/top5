@@ -20,6 +20,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    top: {
+      type: Schema.Types.ObjectId,
+      ref: "Top",
+    },
     isAdmin: Boolean,
   },
   {
