@@ -21,13 +21,13 @@
     <div class="user-info">
       {{#if user}}
         <p class="current-user">Current User: {{user.username}}</p>
-        <a href="/auth/logout">Logout</a>
+        <a href="/auth/logout">Log Out</a>
         <a href="/perfil">Profile</a>
         <a href="/alltops">All Tops</a>
+        
       {{else}}
-        <a href="/auth/login">Login</a>
-        <a href="/auth/signup">Signup</a>
-        <a href="/">home</a>
+        <a href="/auth/login">Log in</a>
+        <a href="/auth/signup">Sign up</a>
       {{/if}}
     </div>
   </div>

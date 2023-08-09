@@ -1,45 +1,86 @@
- <a href="/">Volver</a>
-
-  {{#if user}}
-    <a href="/alltops" class="btn btn-primary">Todos los Tops</a>
-    <div class="container profile">
-      <h2>Perfil</h2>
-      <p>Nombre: {{user.username}}</p>
-      <p>Correo electrónico: {{user.email}}</p>
+{{!-- 
+{{#if tops}}
+  <div class="container">
+    <h2>All Tops</h2>
+    <div class="tops-container">
+      {{#each tops}}
+        <div id="top" class="container mt-5">
+          <h3><a href="/alltops/{{this._id}}">Top de {{this.owner.username}}</a></h3>
+          <ul>
+            {{#each this.moviesData}}
+              <li>
+                <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
+                <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/each}}
     </div>
-  {{/if}}
-
-  {{#each allTopsWithMovies}}
-    <div class="container mt-5">
-      <h2>Top 5 Películas de {{username}}</h2>
-      <ul class="list-unstyled">
-        {{#each moviesData}}
-          <li class="movie-item">
-            <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}" class="movie-poster">
-            <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
-            {{#if user}}
-              <form action="/remove-from-top" method="POST">
-                <input type="hidden" name="movieId" value="{{this.id}}">
-                <button type="submit">Eliminar del Top</button>
-              </form>
-            {{/if}}
-          </li>
+  </div>
+{{else}}
+  <div class="container">
+    <p>No hay tops disponibles.</p>
+  </div>
+{{/if}}
+ --}}
+{{!-- {{#if tops}}
+  <div class="container">
+    <h2>All Tops</h2>
+    <div class="tops-container">
+      <div class="row">
+        {{#each tops}}
+          <div class="col-md-6">
+            <div class="top-box">
+              <h3><a href="/alltops/{{this._id}}">Top de {{this.owner.username}}</a></h3>
+              <ul>
+                {{#each this.moviesData}}
+                  <li>
+                    <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
+                    <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
         {{/each}}
-      </ul>
-
-      {{#if user}}
-        <form action="/add-comment" method="POST">
-          <input type="hidden" name="topId" value="{{this._id}}">
-          <textarea name="content" placeholder="Escribe tu comentario aquí" required></textarea>
-          <button type="submit">Agregar Comentario</button>
-        </form>
-      {{/if}}
-
-      <h3>Comentarios:</h3>
-      <ul class="comments-list">
-        {{#each comments}}
-          <li>{{this.content}}</li>
-        {{/each}}
-      </ul>
+      </div>
     </div>
-  {{/each}}
+  </div>
+{{else}}
+  <div class="container">
+    <p>No hay tops disponibles.</p>
+  </div>
+{{/if}} --}}
+
+{{#if tops}}
+  <div class="container">
+    <br>
+    <h2>All Tops</h2>
+    <div class="tops-container">
+      <div class="row">
+        {{#each tops}}
+          <div class="col-md-4">
+            <a href="/alltops/{{this._id}}" class="top-link">
+              <div class="top-box">
+                <h3>Top de {{this.owner.username}}</h3>
+                <ul>
+                  {{#each this.moviesData}}
+                    <li>
+                      <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
+                      <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            </a>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+{{else}}
+  <div class="container">
+    <p>No hay tops disponibles.</p>
+  </div>
+{{/if}}

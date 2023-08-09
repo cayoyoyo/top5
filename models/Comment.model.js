@@ -6,11 +6,6 @@ const commentSchema = new Schema(
       type: String,
       required: true,
     },
-    topId: {
-      type: Schema.Types.ObjectId,
-      ref: "Top",
-      required: true,
-    },
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",

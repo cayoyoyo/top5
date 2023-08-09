@@ -1,4 +1,3 @@
-  <a href="/">Volver</a>
 
   {{#if user}}
     <div class="container profile">
@@ -15,7 +14,7 @@
         {{#each user.top.moviesData}}
           <li>
             <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-            <p>{{this.title}} ({{this.release_date}})</p>
+            <p>{{this.title}} </p>
             <form action="/remove-from-top" method="POST">
               <input type="hidden" name="movieId" value="{{this.id}}">
               <button class="btn btn-primary" type="submit">Eliminar</button>

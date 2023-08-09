@@ -1,8 +1,8 @@
   
   
  
-  <div class="container my-5">
     {{#unless user}}
+  <div class="container my-5">
     <h1 class="text-center">Welcome to our movie website! To create your top 5 movie list, sign up and log in. Join now to share your favorites and see others tops!</h1>
     <div class="image-container">
     <img src="/images/top53.jpeg" alt="Imagen TOP 5">
@@ -18,16 +18,20 @@
   </div>
 {{else}}
   {{#if movies}}
-    <div class="container mt-5">
+    <div id="top" class="container mt-5">
       <h2>Resultados de la búsqueda:</h2>
       <ul>
         {{#each movies}}
+        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
           <li><a href="/movies/{{this.id}}"> {{this.title}} ({{this.release_date}})</a></li>
         {{/each}}
       </ul>
     </div>
   {{/if}}
 {{/if}} 
+
+
+
 
 
 

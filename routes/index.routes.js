@@ -180,7 +180,7 @@ router.post("/add-to-top5", isLoggedIn, (req, res, next) => {
 
             .then((response) => {
               console.log(response);
-              res.redirect("/");
+              res.redirect("/perfil");
             })
 
             .catch((err) => next(err));
@@ -229,68 +229,97 @@ router.post("/remove-from-top", isLoggedIn, (req, res, next) => {
 });
 
 
-router.get("/alltops", isLoggedIn, (req, res, next) => {
-  User.find()
-    .populate({
-      path: "top",
-      populate: [
-        {
-          path: "moviesId",
-        },
-        {
-          path: "comments", // Asegúrate de que estés populando los comentarios
-        },
-      ],
-    })
-    .then((users) => {
-      const allTops = users.map((user) => ({
-        username: user.username,
-        topMovies: user.top.moviesId,
-        comments: user.top.comments,
-      }));
 
-      const moviePromises = allTops.flatMap((top) =>
-        top.topMovies.map((movieId) =>
+router.get("/alltops", isLoggedIn, (req, res, next) => {
+  Top.find()
+    .populate("owner", "username")
+    .then((tops) => {
+      const topPromises = tops.map((top) => {
+        const moviePromises = top.moviesId.map((movieId) =>
           axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
             params: {
               api_key: process.env.API_KEY,
             },
           })
-        )
-      );
+        );
 
-      Promise.all(moviePromises)
-        .then((responses) => {
-          const dataMovies = responses.map((response) => response.data);
+        return Promise.all(moviePromises)
+          .then((movieResponses) => {
+            const moviesData = movieResponses.map((response) => response.data);
 
-          const allTopsWithMovies = allTops.map((top, index) => ({
-            ...top,
-            moviesData: dataMovies.slice(index * 5, (index + 1) * 5),
-          }));
+            return {
+              ...top.toObject(),
+              moviesData,
+            };
+          });
+      });
 
-          res.render("alltops", { allTopsWithMovies });
+      Promise.all(topPromises)
+        .then((topsWithMoviesData) => {
+          res.render("alltops", { tops: topsWithMoviesData });
         })
-        .catch((err) => next(err));
+        .catch((error) => {
+          next(error);
+        });
     })
-    .catch((err) => next(err));
+    .catch((error) => {
+      next(error);
+    });
 });
 
-router.post("/add-comment", (req, res, next) => {
-  const { topId, content } = req.body;
+router.get("/alltops/:id", (req, res, next) => {
+  const topId = req.params.id;
 
-  Comment.create({
-    content: content,
-    topId: topId,
-    author: req.session.currentUser._id, // ID del usuario actual, asumiendo que lo tienes almacenado en la sesión
-  })
-    .then((comment) => {
-      // Agregar el ID del comentario al arreglo de 'comments' del top correspondiente
-      return Top.findByIdAndUpdate(topId, { $push: { comments: comment._id } });
+  Top.findById(topId)
+    .populate({
+      path: "moviesId",
     })
-    .then(() => {
-      res.redirect("/alltops"); // Redirigir al usuario de vuelta a la página de todos los tops después de agregar el comentario
+    .populate({
+      path: "comments",
     })
-    .catch((err) => next(err));
+    .then((top) => {
+      if (!top) {
+        return res.status(404).send("Top no encontrado");
+      }
+
+      res.render("topdetails", { top });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
+
+
+
+router.post("/alltops/:id/add-comment", (req, res, next) => {
+  Top.findById(req.params.id)
+    .then((top) => {
+      if (!top) {
+        return res.status(404).send("Top no encontrado");
+      }
+      
+      const newComment = new Comment({
+        content: req.body.content,
+        top: top._id,
+      });
+
+      newComment.save()
+        .then(() => {
+          top.comments.push(newComment._id);
+          return top.save();
+        })
+        .then(() => {
+          res.redirect(`/alltops/${top._id}`);
+        })
+        .catch((error) => {
+          next(error);
+        });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
+
 
 module.exports = router;

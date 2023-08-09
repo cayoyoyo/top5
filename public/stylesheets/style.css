@@ -10,12 +10,12 @@ h1 {
 }
 
 .navbar {
-  /* background-color: #333; */
   background-color: black;
   overflow: hidden;
   display: flex; /* Added flex display to position elements */
   justify-content: space-between; /* Separate elements to both ends */
   align-items: center; /* Center vertically */
+  border-radius: 20px;
 
 }
 .search-form {
@@ -38,18 +38,15 @@ h1 {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .navbar a:hover {
-  background-color: #ddd;
+  background-color:rgb(237, 242, 164);
   color: black;
+  border-radius: 10px;
 }
-
-/* Center the title */
-.text-center {
-  text-align: center;
-}
-
 
 .current-user {
   float: left; 
@@ -125,6 +122,7 @@ h1 {
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
+  margin-left: 30px;
 }
 
 .btn-primary:hover {
@@ -136,6 +134,7 @@ h1 {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   padding: 20px;
+  margin-top: 20px;
 }
 
 /* Estilos para el top de películas */
@@ -173,4 +172,197 @@ h1 {
   margin: 0;
   font-size: 18px;
   font-weight: bold;
+}
+
+/* Estilo para cada top de películas */
+.container.mt-5 {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.container.mt-5 h2 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.container.mt-5 ul {
+  list-style: none;
+  padding: 0;
+}
+
+.container.mt-5 li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.container.mt-5 .movie-poster {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container.mt-5 .movie-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Estilo para mostrar los comentarios y el formulario al hacer clic */
+.comments-list {
+  display: none;
+  margin-top: 20px;
+}
+
+.add-comment-form {
+  display: none;
+  margin-top: 20px;
+}
+
+
+/* Estilo para cada top de usuario en 'alltops' */
+.top-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.top-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.top-box h3 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.top-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-box li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.top-box .movie-poster {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-box .movie-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Estilos para la vista 'topdetails' */
+.top-details {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.top-details h2 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.top-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-details li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.top-details .movie-poster {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.top-details .movie-info {
+  flex: 1;
+}
+
+.top-details .movie-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.top-details .comments-section {
+  margin-top: 30px;
+}
+
+.top-details .comments-list {
+  list-style: none;
+  padding: 0;
+}
+
+.top-details .comment {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.top-details .add-comment-form {
+  margin-top: 20px;
+}
+
+.top-details textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.tops-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.top-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 768px) {
+  .tops-container {
+    flex-direction: column;
+  }
 }
