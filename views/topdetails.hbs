@@ -1,7 +1,6 @@
- {{!-- <!-- topdetails.hbs -->
 {{#if top}}
   <div class="container top-details">
-    <h2>Top de {{top.owner.username}}</h2>
+    <h2>Top by {{top.owner.username}}</h2>
     <ul>
       {{#each top.moviesId}}
         <li class="movie-item">
@@ -13,7 +12,7 @@
       {{/each}}
     </ul>
     <div class="comments-section">
-      <h3>Comentarios</h3>
+      <h3>Comments</h3>
       <ul class="comments-list">
         {{#each top.comments}}
           <li class="comment">{{this.content}}</li>
@@ -21,45 +20,13 @@
       </ul>
       <form class="add-comment-form" action="/alltops/{{top._id}}/add-comment" method="POST">
         <textarea name="content" rows="3" cols="40" required></textarea>
-        <button type="submit">Agregar Comentario</button>
+        <button type="submit">Add Comment</button>
       </form>
     </div>
   </div>
 {{else}}
   <div class="container">
-    <p>Top no encontrado.</p>
-  </div>
-{{/if}}  --}}
-
-{{#if top}}
-  <div class="container top-details">
-    <h2>Top de {{top.owner.username}}</h2>
-    <ul>
-      {{#each top.moviesId}}
-        <li class="movie-item">
-          <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-          <div class="movie-info">
-            <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
-    <div class="comments-section">
-      <h3>Comentarios</h3>
-      <ul class="comments-list">
-        {{#each top.comments}}
-          <li class="comment">{{this.content}}</li>
-        {{/each}}
-      </ul>
-      <form class="add-comment-form" action="/alltops/{{top._id}}/add-comment" method="POST">
-        <textarea name="content" rows="3" cols="40" required></textarea>
-        <button type="submit">Agregar Comentario</button>
-      </form>
-    </div>
-  </div>
-{{else}}
-  <div class="container">
-    <p>Top no encontrado.</p>
+    <p>Top not found.</p>
   </div>
 {{/if}}
 

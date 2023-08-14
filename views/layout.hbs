@@ -12,15 +12,15 @@
     {{#if user}} <!-- Check if the user is logged in -->
       <form action="/search" method="GET" class="search-form">
         <div class="mb-3">
-          <label for="movie" class="form-label">Find a Movie!</label>
+          {{!-- <label for="movie" class="form-label">Find a Movie!</label> --}}
           <input id="movie" type="text" class="form-control" name="movie" />
         </div>
-        <button type="submit" class="btn btn-primary">Buscar película</button>
+        <button type="submit" class="btn btn-primary">Find a Movie!</button>
       </form>
       {{/if}}
     <div class="user-info">
       {{#if user}}
-        <p class="current-user">Current User: {{user.username}}</p>
+        {{!-- <p class="current-user">Current User: {{user.username}}</p> --}}
         <a href="/auth/logout">Log Out</a>
         <a href="/perfil">Profile</a>
         <a href="/alltops">All Tops</a>

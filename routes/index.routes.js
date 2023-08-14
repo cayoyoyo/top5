@@ -17,7 +17,7 @@ router.get("/", (req, res, next) => {
   });
 });
 
-router.get("/perfil", (req, res, next) => {
+router.get("/perfil", isLoggedIn, (req, res, next) => {
   User.findById(req.session.currentUser._id)
     .populate({
       path: "top",
@@ -189,7 +189,7 @@ router.post("/add-to-top5", isLoggedIn, (req, res, next) => {
             user: req.session.currentUser,
             movie: movieData,
             imageUrl: imageUrl,
-            errorMessage: "No puedes añadir más de 5 películas, greedy!",
+            errorMessage: "You cannot add more than 5 movies!",
           });
         }
       });
@@ -282,7 +282,25 @@ router.get("/alltops/:id", (req, res, next) => {
         return res.status(404).send("Top no encontrado");
       }
 
-      res.render("topdetails", { top });
+      // Obtener la información completa de las películas del top
+      const moviePromises = top.moviesId.map((movieId) =>
+        axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+          params: {
+            api_key: process.env.API_KEY,
+          },
+        })
+      );
+
+      // Ejecutar las solicitudes en paralelo
+      Promise.all(moviePromises)
+        .then((responses) => {
+          const moviesData = responses.map((response) => response.data);
+
+          res.render("topdetails", { top: top, moviesData: moviesData });
+        })
+        .catch((error) => {
+          next(error);
+        });
     })
     .catch((error) => {
       next(error);
@@ -291,8 +309,12 @@ router.get("/alltops/:id", (req, res, next) => {
 
 
 
+
 router.post("/alltops/:id/add-comment", (req, res, next) => {
-  Top.findById(req.params.id)
+  const userId = req.session.currentUser._id; // Obtener el ID del usuario actual
+  const topId = req.params.id;
+
+  Top.findById(topId)
     .then((top) => {
       if (!top) {
         return res.status(404).send("Top no encontrado");
@@ -300,13 +322,14 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
       
       const newComment = new Comment({
         content: req.body.content,
+        author: userId, // Establecer el autor del comentario como el usuario actual
         top: top._id,
       });
 
       newComment.save()
         .then(() => {
-          top.comments.push(newComment._id);
-          return top.save();
+          top.comments.push(newComment._id); // Agregar el ID del comentario al array
+          return top.save(); // Guardar el top actualizado con el nuevo comentario
         })
         .then(() => {
           res.redirect(`/alltops/${top._id}`);
@@ -319,6 +342,7 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
       next(error);
     });
 });
+
 
 
 

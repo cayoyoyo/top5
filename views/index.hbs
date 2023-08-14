@@ -1,47 +1,30 @@
-  
-  
- 
-    {{#unless user}}
+{{#unless user}}
   <div class="container my-5">
-    <h1 class="text-center">Welcome to our movie website! To create your top 5 movie list, sign up and log in. Join now to share your favorites and see others tops!</h1>
+    <h1 class="text-center">Welcome to our movie website! To create your top 5 movie list, sign up and log in. Join now to share your favorites and see others' tops!</h1>
     <div class="image-container">
-    <img src="/images/top53.jpeg" alt="Imagen TOP 5">
+      <img src="/images/top53.jpeg" alt="TOP 5 Image">
     </div>
-    {{/unless}}
-
+  </div>
+{{/unless}}
 
 {{#if movie}}
   <div class="movie-info">
-    <h2>Movie Info</h2>
+    <h2>Movie Information</h2>
     <p>Name: {{movie.title}}</p>
     <p>Release Year: {{movie.release_date}}</p>
   </div>
 {{else}}
   {{#if movies}}
-    <div id="top" class="container mt-5">
-      <h2>Resultados de la búsqueda:</h2>
+    <div id="results" class="container mt-5">
+      <h2>Search Results:</h2>
       <ul>
         {{#each movies}}
-        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-          <li><a href="/movies/{{this.id}}"> {{this.title}} ({{this.release_date}})</a></li>
+          <li>
+            <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
+            <a href="/movies/{{this.id}}">{{this.title}} ({{this.release_date}})</a>
+          </li>
         {{/each}}
       </ul>
     </div>
   {{/if}}
-{{/if}} 
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
+{{/if}}

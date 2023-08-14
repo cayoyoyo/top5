@@ -1,58 +1,3 @@
-{{!-- 
-{{#if tops}}
-  <div class="container">
-    <h2>All Tops</h2>
-    <div class="tops-container">
-      {{#each tops}}
-        <div id="top" class="container mt-5">
-          <h3><a href="/alltops/{{this._id}}">Top de {{this.owner.username}}</a></h3>
-          <ul>
-            {{#each this.moviesData}}
-              <li>
-                <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-                <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/each}}
-    </div>
-  </div>
-{{else}}
-  <div class="container">
-    <p>No hay tops disponibles.</p>
-  </div>
-{{/if}}
- --}}
-{{!-- {{#if tops}}
-  <div class="container">
-    <h2>All Tops</h2>
-    <div class="tops-container">
-      <div class="row">
-        {{#each tops}}
-          <div class="col-md-6">
-            <div class="top-box">
-              <h3><a href="/alltops/{{this._id}}">Top de {{this.owner.username}}</a></h3>
-              <ul>
-                {{#each this.moviesData}}
-                  <li>
-                    <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-                    <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
-                  </li>
-                {{/each}}
-              </ul>
-            </div>
-          </div>
-        {{/each}}
-      </div>
-    </div>
-  </div>
-{{else}}
-  <div class="container">
-    <p>No hay tops disponibles.</p>
-  </div>
-{{/if}} --}}
-
 {{#if tops}}
   <div class="container">
     <br>
@@ -63,12 +8,12 @@
           <div class="col-md-4">
             <a href="/alltops/{{this._id}}" class="top-link">
               <div class="top-box">
-                <h3>Top de {{this.owner.username}}</h3>
+                <h3>{{this.owner.username}}'s Top</h3>
                 <ul>
                   {{#each this.moviesData}}
                     <li>
                       <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-                      <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
+                      <p class="movie-title">{{this.title}}</p>
                     </li>
                   {{/each}}
                 </ul>
@@ -81,6 +26,6 @@
   </div>
 {{else}}
   <div class="container">
-    <p>No hay tops disponibles.</p>
+    <p>No tops available.</p>
   </div>
 {{/if}}
