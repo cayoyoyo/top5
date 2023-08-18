@@ -63,22 +63,26 @@ const commentSchema = new Schema({
 
 
 # User Routes
-# API Endpoints
-| Method | Endpoint                       | Request Body                        | Response (200)                    | Action                                             |
-| ------ | ------------------------------ | ----------------------------------- | -------------------------------- | -------------------------------------------------- |
-| POST   | /signup                        | { username, email, password }       | -                                | Registers the user in the database.                |
-| POST   | /login                         | { email, password }                 | { authToken: authToken }         | Logs in a user already registered.                 |
-| GET    | /movies                        | -                                   | { movies: [movie] }              | Retrieves a list of movies from the TMDb API.      |
-| GET    | /movies/:movieId               | -                                   | { movie: movie }                 | Retrieves detailed information about a specific movie from the TMDb API. |
-| GET    | /users/:userId/movies          | -                                   | { topList: [movie] }             | Get a user's top 5 movie list from the database.   |
-| POST   | /users/:userId/movies          | { movieId }                         | -                                | Add a movie to the user's top 5 list in the database. |
-| GET    | /tops                          | -                                   | { tops: [top] }                  | Retrieves a list of top lists from the database.   |
-| GET    | /tops/:topId                   | -                                   | { top: top }                     | Retrieves detailed information about a specific top list from the database. |
-| GET    | /tops/:topId/comments          | -                                   | { comments: [comment] }          | Get comments for a specific top list from the database. |
-| POST   | /tops/:topId/comments          | { text }    
+# Auth Routes
+## API Endpoints
 
-
-
+| Method | Endpoint                  | Request Body                      | Response (200)                  | Action                                              |
+| ------ | ------------------------- | --------------------------------- | ------------------------------- | --------------------------------------------------- |
+| GET    | /auth/signup              | -                                 | -                               | Renders the signup form.                          |
+| POST   | /auth/signup              | { username, email, password }     | -                               | Registers a new user.                             |
+| GET    | /auth/login               | -                                 | -                               | Renders the login form.                           |
+| POST   | /auth/login               | { email, password }               | -                               | Logs in a user.                                  |
+| GET    | /auth/logout              | -                                 | -                               | Logs out the current user.                        |
+| GET    | /                                     | -                                 | -                               | Renders the home page.                              |
+| GET    | /perfil                               | -                                 | -                               | Renders the user's profile page.                    |
+| POST   | /remove-from-top                      | { movieId }                       | -                               | Removes a movie from the user's top list.           |
+| GET    | /search                               | -                                 | { movies: [movie] }            | Retrieves a list of movies based on the search.    |
+| GET    | /movies/:id                           | -                                 | { movie: movie }               | Retrieves detailed information about a movie.      |
+| POST   | /add-to-top5                          | { movieId }                       | -                               | Adds a movie to the user's top list.                |
+| GET    | /alltops                              | -                                 | { tops: [top] }                | Retrieves a list of all top lists.                 |
+| GET    | /alltops/:id                          | -                                 | { top: top }                   | Retrieves detailed information about a top list.   |
+| POST   | /alltops/:id/add-comment              | { content }                       | -                               | Adds a comment to a top list.                      |
+| POST   | /alltops/:topId/delete-comment/:commentId | -                             | -                               | Deletes a comment from a top list.                |
 
 
 
