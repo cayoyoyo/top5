@@ -19,39 +19,61 @@ $ npm start
 
 ## User.model.js
 ```js
-const userSchema = new Schema({
-  username: { type: String, required: false, unique: true, trim: true },
-  email: { type: String, required: true, unique: true, trim: true, lowercase: true },
-  password: { type: String, required: true },
-  isAdmin: Boolean,
-});
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: false,
+      unique: true,
+      trim: true, },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,  },
+    password: {
+      type: String,
+      required: true,   },
+    top: {
+      type: Schema.Types.ObjectId,
+      ref: "Top",  },
+    isAdmin: Boolean  },
+  { timestamps: true, }
+);
 ```
 
 ## Top.model.js
 ```js
-const topSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+const topSchema = new Schema({
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true, },
   moviesId: {
     type: [String],
-    validate: {
-        validator: function (moviesId) {
-          return moviesId.length === 5;
-        },
-        message: "A top must have exactly 5 movies.",
-      }, 
-      required: true,
-  },
+    required: true, },
+  comments: [
+    { type: Schema.Types.ObjectId,
+      ref: "Comment", }, ],
 });
+
 
 
 ```
 ## Comment.model.js
 ```js
-const commentSchema = new Schema({
-    content: {type: String, required: true,},
-    topId: { type: Schema.Types.ObjectId, ref: "Top", required: true,},
-    author: { type: Schema.Types.ObjectId, ref: "User", required: true,
-});
+const commentSchema = new Schema(
+  {
+    content: {
+      type: String,
+      required: true, },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true, }, },
+  { timestamps: true, }
+);
 ```
 
 
