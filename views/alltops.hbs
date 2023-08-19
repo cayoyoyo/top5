@@ -1,3 +1,4 @@
+
 {{#if tops}}
   <div class="container">
     <br>
@@ -13,7 +14,7 @@
                   {{#each this.moviesData}}
                     <li>
                       <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-                      <p class="movie-title">{{this.title}}</p>
+                      <p class="movie-title">{{this.title}} </p>
                     </li>
                   {{/each}}
                 </ul>
@@ -26,6 +27,6 @@
   </div>
 {{else}}
   <div class="container">
-    <p>No tops available.</p>
+    <p>No hay tops disponibles.</p>
   </div>
 {{/if}}

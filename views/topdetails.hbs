@@ -1,22 +1,27 @@
 {{#if top}}
   <div class="container top-details">
     <h2>Top by {{top.owner.username}}</h2>
-    <ul>
-      {{#each top.moviesId}}
-        <li class="movie-item">
-          <img class="movie-poster" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-          <div class="movie-info">
-            <p class="movie-title">{{this.title}} ({{this.release_date}})</p>
-          </div>
-        </li>
+    <div class="top-movies">
+      {{#each moviesData}}
+        <div class="movie-item">
+          <img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
+            <br><br><br>
+            <p class="movie-title">{{this.title}} </p>
+         
+        </div>
       {{/each}}
-    </ul>
+    </div>
     <div class="comments-section">
       <h3>Comments</h3>
       <ul class="comments-list">
         {{#each top.comments}}
-          <li class="comment">{{this.content}}</li>
+          <li>{{this.content}}</li>
+          <li>by: {{this.author.username}}</li>
+          {{#if user }}
+              <a href="/posts/{{this._id}}/delete" class="btn btn-danger">Borrar</a>
+          {{/if}}
         {{/each}}
+           </div>
       </ul>
       <form class="add-comment-form" action="/alltops/{{top._id}}/add-comment" method="POST">
         <textarea name="content" rows="3" cols="40" required></textarea>
@@ -29,4 +34,3 @@
     <p>Top not found.</p>
   </div>
 {{/if}}
-

@@ -1,28 +1,33 @@
-{{#if user}}
-  <div id="top" class="container profile">
-    <h2>{{user.username}}'s Profile</h2>
-    <p>Email: {{user.email}}</p>
-  </div>
-{{/if}}
-
 {{#if user.top}}
-  <div id="top" class="container mt-5">
-    <h2>{{user.username}}'s Top 5 Movies</h2>
-    <ul>
-      {{#each user.top.moviesData}}
-        <li>
-          <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
-          <p>{{this.title}}</p>
-          <form action="/remove-from-top" method="POST">
-            <input type="hidden" name="movieId" value="{{this.id}}">
-            <button class="btn btn-primary" type="submit">Remove</button>
-          </form>
-        </li>
-      {{/each}}
-    </ul>
+  <div  class="container mt-5 top-movies">
+    {{#each user.top.moviesData}}
+      <div class="movie-item">
+        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}" >
+        <br><br><br>
+        <p>{{this.title}}</p>
+        <form action="/remove-from-top" method="POST">
+          <input type="hidden" name="movieId" value="{{this.id}}">
+          <button class="btn btn-primary" type="submit">Remove</button>
+        </form>
+      </div>
+    {{/each}}
   </div>
 {{else}}
   <div class="container mt-5">
     <p>No movies in the top.</p>
   </div>
 {{/if}}
+
+
+{{#if user}}
+  <div id="top" class="container profile">
+    <div class="row">
+      <div class="col">
+        <h2>{{user.username}}'s Profile</h2><hr>
+        <p>Email: {{user.email}}</p>
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+

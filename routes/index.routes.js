@@ -10,6 +10,8 @@ const Comment = require("../models/Comment.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+
+
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.render("index", {
@@ -230,6 +232,7 @@ router.post("/remove-from-top", isLoggedIn, (req, res, next) => {
 
 
 
+
 router.get("/alltops", isLoggedIn, (req, res, next) => {
   Top.find()
     .populate("owner", "username")
@@ -243,20 +246,21 @@ router.get("/alltops", isLoggedIn, (req, res, next) => {
           })
         );
 
-        return Promise.all(moviePromises)
-          .then((movieResponses) => {
-            const moviesData = movieResponses.map((response) => response.data);
+        return Promise.all(moviePromises).then((movieResponses) => {
+          const moviesData = movieResponses.map((response) => response.data);
 
-            return {
-              ...top.toObject(),
-              moviesData,
-            };
-          });
+         
+
+          return {
+            ...top.toObject(),
+            moviesData,
+          };
+        });
       });
 
       Promise.all(topPromises)
         .then((topsWithMoviesData) => {
-          res.render("alltops", { tops: topsWithMoviesData });
+          res.render("alltops", { tops: topsWithMoviesData,  user: req.session.currentUser});
         })
         .catch((error) => {
           next(error);
@@ -271,12 +275,15 @@ router.get("/alltops/:id", (req, res, next) => {
   const topId = req.params.id;
 
   Top.findById(topId)
-    .populate({
-      path: "moviesId",
-    })
+    .populate("owner comments")
     .populate({
       path: "comments",
+      populate: {
+        path: "author",
+        model: "User",
+      },
     })
+    
     .then((top) => {
       if (!top) {
         return res.status(404).send("Top no encontrado");
@@ -295,8 +302,8 @@ router.get("/alltops/:id", (req, res, next) => {
       Promise.all(moviePromises)
         .then((responses) => {
           const moviesData = responses.map((response) => response.data);
-
-          res.render("topdetails", { top: top, moviesData: moviesData });
+          
+          res.render("topdetails", { top: top, moviesData: moviesData,  user: req.session.currentUser, });
         })
         .catch((error) => {
           next(error);
@@ -307,9 +314,6 @@ router.get("/alltops/:id", (req, res, next) => {
     });
 });
 
-
-
-
 router.post("/alltops/:id/add-comment", (req, res, next) => {
   const userId = req.session.currentUser._id; // Obtener el ID del usuario actual
   const topId = req.params.id;
@@ -319,14 +323,15 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
       if (!top) {
         return res.status(404).send("Top no encontrado");
       }
-      
+
       const newComment = new Comment({
         content: req.body.content,
         author: userId, // Establecer el autor del comentario como el usuario actual
         top: top._id,
       });
 
-      newComment.save()
+      newComment
+        .save()
         .then(() => {
           top.comments.push(newComment._id); // Agregar el ID del comentario al array
           return top.save(); // Guardar el top actualizado con el nuevo comentario
@@ -344,6 +349,39 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
 });
 
 
+router.post("/alltops/:topId/delete-comment/:commentId", (req, res, next) => {
+  const topId = req.params.topId;
+  const commentId = req.params.commentId;
+
+  // Encuentra el top y el comentario correspondiente
+  Top.findById(topId)
+    .then((top) => {
+      if (!top) {
+        return res.status(404).send("Top no encontrado");
+      }
+
+      // Verifica que el comentario pertenezca al top
+      if (!top.comments.includes(commentId)) {
+        return res.status(404).send("Comentario no encontrado en este top");
+      }
+
+      // Elimina el comentario del top y de la base de datos
+      Comment.findByIdAndRemove(commentId)
+        .then(() => {
+          top.comments.pull(commentId);
+          return top.save();
+        })
+        .then(() => {
+          res.redirect(`/alltops/${top._id}`);
+        })
+        .catch((error) => {
+          next(error);
+        });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 
 module.exports = router;
