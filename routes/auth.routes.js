@@ -22,11 +22,18 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 // POST /auth/signup
+// POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, email, password } = req.body;
-
+  const { username, email, password, confirmPassword, adminPassword } =
+    req.body;
+  let isAdmin = false;
   // Check that username, email, and password are provided
-  if (username === "" || email === "" || password === "") {
+  if (
+    username === "" ||
+    email === "" ||
+    password === "" ||
+    confirmPassword === ""
+  ) {
     res.status(400).render("auth/signup", {
       errorMessage:
         "All fields are mandatory. Please provide your username, email and password.",
@@ -35,7 +42,19 @@ router.post("/signup", isLoggedOut, (req, res) => {
     return;
   }
 
-  if (password.length < 6) {
+  if (adminPassword === "666666") {
+    isAdmin = true;
+  }
+
+  if (password !== confirmPassword) {
+    res.status(400).render("auth/signup", {
+      errorMessage:
+        "Passwords do not match. Please make sure both passwords are the same.",
+    });
+    return;
+  }
+
+  if (password.length < 4) {
     res.status(400).render("auth/signup", {
       errorMessage: "Your password needs to be at least 6 characters long.",
     });
