@@ -46,13 +46,13 @@ router.post("/signup", isLoggedOut, (req, res) => {
     isAdmin = true;
   }
 
-  if (password !== confirmPassword) {
-    res.status(400).render("auth/signup", {
-      errorMessage:
-        "Passwords do not match. Please make sure both passwords are the same.",
-    });
-    return;
-  }
+  // if (password !== confirmPassword) {
+  //   res.status(400).render("auth/signup", {
+  //     errorMessage:
+  //       "Passwords do not match. Please make sure both passwords are the same.",
+  //   });
+  //   return;
+  // }
 
   if (password.length < 4) {
     res.status(400).render("auth/signup", {
