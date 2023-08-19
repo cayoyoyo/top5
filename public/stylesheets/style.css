@@ -70,6 +70,15 @@ h1 {
   background-color: #0056b3;
 }
 
+.info-message {
+  font-size: 24px;
+  font-weight: bold;
+  color: #428bca; /* Cambia este color según tu preferencia */
+  text-align: center;
+  margin-top: 200px;
+}
+
+
 
 /* estilos para la info del search*/
 .movie-details {

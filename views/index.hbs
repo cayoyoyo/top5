@@ -7,6 +7,14 @@
   </div>
 {{/unless}}
 
+{{#if user}}
+  {{#unless movies}} 
+    <div class="info-message">
+      <p>Find a movie and add it to your top list!</p>
+    </div>
+  {{/unless}}
+{{/if}}
+
 {{#if movie}}
   <div class="movie-info">
     <h2>Movie Information</h2>
@@ -28,3 +36,5 @@
     </div>
   {{/if}}
 {{/if}}
+
+

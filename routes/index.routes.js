@@ -192,6 +192,7 @@ router.post("/add-to-top5", isLoggedIn, (req, res, next) => {
             movie: movieData,
             imageUrl: imageUrl,
             errorMessage: "You cannot add more than 5 movies! Please remove one to continue.",
+            perfilLink: "/perfil", 
           });
         }
       });
@@ -271,6 +272,7 @@ router.get("/alltops", isLoggedIn, (req, res, next) => {
     });
 });
 
+
 router.get("/alltops/:id", (req, res, next) => {
   const topId = req.params.id;
 
@@ -283,11 +285,21 @@ router.get("/alltops/:id", (req, res, next) => {
         model: "User",
       },
     })
-    
     .then((top) => {
       if (!top) {
         return res.status(404).send("Top no encontrado");
       }
+
+      // Check if the current user is the owner of the comment
+      const currentUser = req.session.currentUser;
+
+      top.comments.forEach((comment) => {
+        comment.isCurrentUserComment = (
+          currentUser &&
+          comment.author &&
+          (comment.author._id.toString() === currentUser._id.toString())
+        );
+      });
 
       // Obtener la información completa de las películas del top
       const moviePromises = top.moviesId.map((movieId) =>
@@ -303,7 +315,11 @@ router.get("/alltops/:id", (req, res, next) => {
         .then((responses) => {
           const moviesData = responses.map((response) => response.data);
           
-          res.render("topdetails", { top: top, moviesData: moviesData,  user: req.session.currentUser, });
+          res.render("topdetails", {
+            top: top,
+            moviesData: moviesData,
+            user: currentUser,
+          });
         })
         .catch((error) => {
           next(error);
@@ -313,6 +329,7 @@ router.get("/alltops/:id", (req, res, next) => {
       next(error);
     });
 });
+
 
 router.post("/alltops/:id/add-comment", (req, res, next) => {
   const userId = req.session.currentUser._id; // Obtener el ID del usuario actual
@@ -349,39 +366,39 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
 });
 
 
-// router.post("/alltops/:topId/delete-comment/:commentId", (req, res, next) => {
-//   const topId = req.params.topId;
-//   const commentId = req.params.commentId;
+router.get("/alltops/:topId/delete/:commentId", (req, res, next) => {
+  const topId = req.params.topId;
+  const commentId = req.params.commentId;
 
-//   // Encuentra el top y el comentario correspondiente
-//   Top.findById(topId)
-//     .then((top) => {
-//       if (!top) {
-//         return res.status(404).send("Top no encontrado");
-//       }
+  // Encuentra el top y el comentario correspondiente
+  Top.findById(topId)
+    .then((top) => {
+      if (!top) {
+        return res.status(404).send("Top no encontrado");
+      }
 
-//       // Verifica que el comentario pertenezca al top
-//       if (!top.comments.includes(commentId)) {
-//         return res.status(404).send("Comentario no encontrado en este top");
-//       }
+      // Verifica que el comentario pertenezca al top
+      if (!top.comments.includes(commentId)) {
+        return res.status(404).send("Comentario no encontrado en este top");
+      }
 
-//       // Elimina el comentario del top y de la base de datos
-//       Comment.findByIdAndRemove(commentId)
-//         .then(() => {
-//           top.comments.pull(commentId);
-//           return top.save();
-//         })
-//         .then(() => {
-//           res.redirect(`/alltops/${top._id}`);
-//         })
-//         .catch((error) => {
-//           next(error);
-//         });
-//     })
-//     .catch((error) => {
-//       next(error);
-//     });
-// });
+      // Elimina el comentario del top y de la base de datos
+      Comment.findByIdAndRemove(commentId)
+        .then(() => {
+          top.comments.pull(commentId);
+          return top.save();
+        })
+        .then(() => {
+          res.redirect(`/alltops/${top._id}`);
+        })
+        .catch((error) => {
+          next(error);
+        });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 
 module.exports = router;

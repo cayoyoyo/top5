@@ -10,21 +10,26 @@
         </div>
       {{/each}}
     </div>
-   <div class="comments-section">
+    <div class="comments-section">
       <h3>Comments</h3>
       <div class="row">
         <div class="col-md-6">
-          <ul class="list-group">
-            {{#each top.comments}}
-              <li class="list-group-item">
-                <div class="mb-2">{{this.content}}</div>
-                {{#if user}}
-                  <a href="/posts/{{this._id}}/delete" class="btn btn-danger btn-sm float-end">Borrar</a>
-                {{/if}}
-                <div class="mt-2 text-muted">by: {{this.author.username}}</div>
-              </li>
-            {{/each}}
-          </ul>
+        <ul class="list-group">
+  {{#each top.comments}}
+    <li class="list-group-item">
+      <div class="mb-2">{{this.content}}</div>
+      {{#if user.isAdmin}}
+        <a href="/alltops/{{top._id}}/delete-comment/{{this._id}}" class="btn btn-danger btn-sm float-end">Borrar</a>
+      {{else}}
+        {{#if this.isCurrentUserComment}}
+          <a href="/alltops/{{top._id}}/delete-comment/{{this._id}}" class="btn btn-danger btn-sm float-end">Borrar</a>
+        {{/if}}
+      {{/if}}
+      <div class="mt-2 text-muted">by: {{this.author.username}}</div>
+    </li>
+  {{/each}}
+</ul>
+
         </div>
       </div>
       <form class="add-comment-form" action="/alltops/{{top._id}}/add-comment" method="POST">
