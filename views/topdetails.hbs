@@ -19,7 +19,7 @@
               <li class="list-group-item">
                 <div class="mb-2">{{this.content}}</div>
                 {{#if this.isCurrentUserComment}}
-               <a href="/alltops/{{../top._id}}/delete/{{this._id}}" class="btn btn-danger btn-sm float-end">Borrar</a>
+                  <a href="/alltops/{{../top._id}}/delete/{{this._id}}" class="btn btn-danger btn-sm float-end">Borrar</a>
                 {{/if}}
                 <div class="mt-2 text-muted">by: {{this.author.username}}</div>
               </li>
@@ -27,6 +27,11 @@
           </ul>
         </div>
       </div>
+      {{#if isAdmin}} <!-- Verifica si el usuario es administrador -->
+        <form action="/alltops/{{top._id}}/delete-all-comments" method="POST">
+          <button type="submit" class="btn btn-danger">Delete All Comments</button>
+        </form>
+      {{/if}}
       <form class="add-comment-form" action="/alltops/{{top._id}}/add-comment" method="POST">
         <div class="mb-3">
           <textarea name="content" rows="3" class="form-control" required></textarea>

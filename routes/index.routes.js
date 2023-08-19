@@ -301,6 +301,9 @@ router.get("/alltops/:id", (req, res, next) => {
         );
       });
 
+      const isAdmin = currentUser && currentUser.role === "admin";
+
+
       // Obtener la información completa de las películas del top
       const moviePromises = top.moviesId.map((movieId) =>
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
@@ -319,6 +322,7 @@ router.get("/alltops/:id", (req, res, next) => {
             top: top,
             moviesData: moviesData,
             user: currentUser,
+            isAdmin: isAdmin,
           });
         })
         .catch((error) => {
