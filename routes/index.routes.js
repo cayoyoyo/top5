@@ -191,7 +191,7 @@ router.post("/add-to-top5", isLoggedIn, (req, res, next) => {
             user: req.session.currentUser,
             movie: movieData,
             imageUrl: imageUrl,
-            errorMessage: "You cannot add more than 5 movies!",
+            errorMessage: "You cannot add more than 5 movies! Please remove one to continue.",
           });
         }
       });
@@ -349,39 +349,39 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
 });
 
 
-router.post("/alltops/:topId/delete-comment/:commentId", (req, res, next) => {
-  const topId = req.params.topId;
-  const commentId = req.params.commentId;
+// router.post("/alltops/:topId/delete-comment/:commentId", (req, res, next) => {
+//   const topId = req.params.topId;
+//   const commentId = req.params.commentId;
 
-  // Encuentra el top y el comentario correspondiente
-  Top.findById(topId)
-    .then((top) => {
-      if (!top) {
-        return res.status(404).send("Top no encontrado");
-      }
+//   // Encuentra el top y el comentario correspondiente
+//   Top.findById(topId)
+//     .then((top) => {
+//       if (!top) {
+//         return res.status(404).send("Top no encontrado");
+//       }
 
-      // Verifica que el comentario pertenezca al top
-      if (!top.comments.includes(commentId)) {
-        return res.status(404).send("Comentario no encontrado en este top");
-      }
+//       // Verifica que el comentario pertenezca al top
+//       if (!top.comments.includes(commentId)) {
+//         return res.status(404).send("Comentario no encontrado en este top");
+//       }
 
-      // Elimina el comentario del top y de la base de datos
-      Comment.findByIdAndRemove(commentId)
-        .then(() => {
-          top.comments.pull(commentId);
-          return top.save();
-        })
-        .then(() => {
-          res.redirect(`/alltops/${top._id}`);
-        })
-        .catch((error) => {
-          next(error);
-        });
-    })
-    .catch((error) => {
-      next(error);
-    });
-});
+//       // Elimina el comentario del top y de la base de datos
+//       Comment.findByIdAndRemove(commentId)
+//         .then(() => {
+//           top.comments.pull(commentId);
+//           return top.save();
+//         })
+//         .then(() => {
+//           res.redirect(`/alltops/${top._id}`);
+//         })
+//         .catch((error) => {
+//           next(error);
+//         });
+//     })
+//     .catch((error) => {
+//       next(error);
+//     });
+// });
 
 
 module.exports = router;

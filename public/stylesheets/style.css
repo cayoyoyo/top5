@@ -511,6 +511,11 @@ h1 {
 
 
 
+.comment-box {
+  margin-bottom: 20px; /* Espacio entre comentarios */
+}
 
-
+.comment-author {
+  margin-top: 10px; /* Espacio entre comentario y autor */
+}
 
