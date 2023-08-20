@@ -76,10 +76,18 @@ router.post("/remove-from-top", (req, res, next) => {
 router.get("/search", isLoggedIn, (req, res, next) => {
   const movieName = req.query.movie; // Obtener el nombre de la película del formulario
 
-  // Verificar si el usuario ingresó un nombre de película válido
-  if (!movieName) {
-    return res.send("Por favor, ingresa el nombre de una película.");
-  }
+  router.get("/search", isLoggedIn, (req, res, next) => {
+    const movieName = req.query.movie; // Obtener el nombre de la película del formulario
+  
+    // Verificar si el usuario ingresó un nombre de película válido
+    let errorMessage = null;
+    if (!movieName) {
+      errorMessage = "Por favor, ingresa el nombre de una película.";
+    }
+  
+    // Renderizar la vista con el mensaje de error (si existe)
+    return res.render("index", { user: req.user, movies: null, movie: null, errorMessage: errorMessage });
+  });
 
   // Realizar la búsqueda de películas utilizando el nombre proporcionado
   axios

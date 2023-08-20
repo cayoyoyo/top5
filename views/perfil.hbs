@@ -1,12 +1,10 @@
-
-
 {{#if user.top}}
-  <div  class="container mt-5 top-movies">
+  <div class="container mt-5 top-movies">
     {{#each user.top.moviesData}}
       <div class="movie-item">
-        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}" >
+        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}}">
         <br><br><br>
-        <p>{{this.title}}</p>
+        <p class="movie-title">{{this.title}}</p>
         <form action="/remove-from-top" method="POST">
           <input type="hidden" name="movieId" value="{{this.id}}">
           <button class="btn btn-primary" type="submit">Remove</button>
@@ -24,11 +22,9 @@
   <div id="top" class="container profile">
     <div class="row">
       <div class="col">
-        <h2>{{user.username}}'s Profile</h2><hr>
+        <h2>{{user.username}}'s Profile{{#if user.isAdmin}} - Admin{{/if}}</h2><hr>
         <p>Email: {{user.email}}</p>
       </div>
     </div>
   </div>
 {{/if}}
-
-

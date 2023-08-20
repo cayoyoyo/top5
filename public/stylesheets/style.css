@@ -15,6 +15,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   border-radius: 20px;
+ 
 }
 .navbar a {
   float: right;
@@ -26,6 +27,7 @@ h1 {
   margin-left: 10px;
   margin-right: 10px;
   font-size: 15px;
+
 }
 
 .navbar a:hover {
@@ -204,13 +206,31 @@ h1 {
   font-size: 28px;
   font-weight: bold;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 50px;
   background-color: rgba(255, 0, 0, 0.1);
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.go-to-profile-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-left: 550px;
+  margin-top: 30px;
+}
+
+.go-to-profile-button:hover {
+  background-color: #0056b3;
+}
 
 /* Estilos para el perfil */
 .container.profile {
@@ -278,6 +298,50 @@ h1 {
 .container.mt-5 .btn-primary:hover {
   background-color: #c82333; /* Cambio de color a rojo más oscuro en el hover */
 }
+
+.main-container {
+
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+ 
+}
+
+.text-container {
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  width: auto; 
+  max-width: 100%; 
+  height: 200px;
+  padding-top: 200px;
+}
+
+.text-container h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color:black;
+}
+
+.text-container h2 {
+  font-size: 18px;
+  margin: 5px 0;
+  color:black;
+}
+
+.image-container {
+  flex: 1;
+  margin-left: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
 
 
 /* Estilo para cada top de usuario en 'alltops' */
@@ -373,47 +437,6 @@ h1 {
   font-weight: bold;
 }
 
-.top-details .comments-section {
-  margin-top: 30px;
-}
-
-.top-details .comments-list {
-  list-style: none;
-  padding: 0;
-}
-
-.top-details .comment {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-size: 18px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.top-details .comment .author {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.top-details .comment .delete-button {
-  color: red;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.top-details .comment .delete-button:hover {
-  color: darkred;
-}
-
-.top-details .add-comment-form {
-  margin-top: 20px;
-}
-
 .top-details textarea {
   width: 100%;
   padding: 10px;
@@ -495,36 +518,42 @@ h1 {
 }
 
 
-
-.add-comment-form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  resize: vertical;
+/* Estilos para la sección de comentarios */
+.comments-section {
+  margin-top: 30px;
 }
 
-.add-comment-form button {
-  background-color: #007bff;
-  color: white;
+/* Estilos para los comentarios */
+.list-group-item {
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-content {
+  font-size: 18px;
+}
+
+.btn-delete {
   margin-top: 10px;
 }
 
-.add-comment-form button:hover {
-  background-color: #0056b3;
+.text-muted {
+  font-size: 14px;
 }
 
-
-
-.comment-box {
-  margin-bottom: 20px; /* Espacio entre comentarios */
+/* Estilos para el formulario de agregar comentario */
+.add-comment-form {
+  margin-top: 30px;
 }
 
-.comment-author {
-  margin-top: 10px; /* Espacio entre comentario y autor */
+/* Estilos para el botón de agregar comentario */
+.add-comment-form button {
+  margin-top: 10px;
 }
 
+/* Estilos para el botón de eliminar todos los comentarios (si es un admin) */
+.delete-all-comments-btn {
+  margin-top: 15px;
+}
