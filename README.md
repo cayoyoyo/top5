@@ -1,4 +1,4 @@
-Project Image
+
 ![Project Image](./public/images/top53.jpeg)
 
 # About
@@ -84,27 +84,66 @@ const commentSchema = new Schema(
 | Admin   | Can access all features of a regular user and perform additional actions, like managing movies in the database.                                                             |
 
 
-# User Routes
-# Auth Routes
-## API Endpoints
+## Rutas de Autenticación (auth)
 
-| Method | Endpoint                  | Request Body                      | Response (200)                  | Action                                              |
-| ------ | ------------------------- | --------------------------------- | ------------------------------- | --------------------------------------------------- |
-| GET    | /auth/signup              | -                                 | -                               | Renders the signup form.                          |
-| POST   | /auth/signup              | { username, email, password }     | -                               | Registers a new user.                             |
-| GET    | /auth/login               | -                                 | -                               | Renders the login form.                           |
-| POST   | /auth/login               | { email, password }               | -                               | Logs in a user.                                  |
-| GET    | /auth/logout              | -                                 | -                               | Logs out the current user.                        |
-| GET    | /                                     | -                                 | -                               | Renders the home page.                              |
-| GET    | /perfil                               | -                                 | -                               | Renders the user's profile page.                    |
-| POST   | /remove-from-top                      | { movieId }                       | -                               | Removes a movie from the user's top list.           |
-| GET    | /search                               | -                                 | { movies: [movie] }            | Retrieves a list of movies based on the search.    |
-| GET    | /movies/:id                           | -                                 | { movie: movie }               | Retrieves detailed information about a movie.      |
-| POST   | /add-to-top5                          | { movieId }                       | -                               | Adds a movie to the user's top list.                |
-| GET    | /alltops                              | -                                 | { tops: [top] }                | Retrieves a list of all top lists.                 |
-| GET    | /alltops/:id                          | -                                 | { top: top }                   | Retrieves detailed information about a top list.   |
-| POST   | /alltops/:id/add-comment              | { content }                       | -                               | Adds a comment to a top list.                      |
-| POST   | /alltops/:topId/delete-comment/:commentId | -                             | -                               | Deletes a comment from a top list.                |
+- **GET /auth/signup**
+  - Middleware: isLoggedOut
+  - Acción: Renderiza la página de registro.
+
+- **POST /auth/signup**
+  - Middleware: isLoggedOut
+  - Acción: Registra al usuario en la base de datos y redirecciona a la página de inicio de sesión.
+
+- **GET /auth/login**
+  - Middleware: isLoggedOut
+  - Acción: Renderiza la página de inicio de sesión.
+
+- **POST /auth/login**
+  - Middleware: isLoggedOut
+  - Acción: Inicia sesión con un usuario registrado y redirecciona a la página de inicio.
+
+- **GET /auth/logout**
+  - Middleware: isLoggedIn
+  - Acción: Cierra la sesión del usuario y redirecciona a la página de inicio.
+
+## Rutas de la Página de Inicio (index)
+
+- **GET /**
+  - Acción: Renderiza la página de inicio.
+
+- **GET /perfil**
+  - Middleware: isLoggedIn
+  - Acción: Muestra el perfil del usuario con información de las películas en su top.
+
+- **POST /remove-from-top**
+  - Acción: Elimina una película del top del usuario.
+
+- **GET /search**
+  - Middleware: isLoggedIn
+  - Acción: Realiza una búsqueda de películas por nombre.
+
+- **GET /movies/:id**
+  - Middleware: isLoggedIn
+  - Acción: Muestra detalles de una película específica.
+
+- **POST /add-to-top5**
+  - Middleware: isLoggedIn
+  - Acción: Agrega una película al top del usuario.
+
+- **GET /alltops**
+  - Middleware: isLoggedIn
+  - Acción: Muestra una lista de todos los tops.
+
+- **GET /alltops/:id**
+  - Acción: Muestra detalles de un top específico.
+
+- **POST /alltops/:id/add-comment**
+  - Middleware: isLoggedIn
+  - Acción: Agrega un comentario a un top específico.
+
+- **GET /alltops/:topId/delete/:commentId**
+  - Acción: Elimina un comentario de un top específico.
+               
 
 
 
