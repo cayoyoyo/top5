@@ -289,16 +289,21 @@ router.get("/alltops/:id", (req, res, next) => {
 
       const currentUser = req.session.currentUser;
 
+      const isAdmin = currentUser && currentUser.role === "admin";
+      console.log("isAdmin:", isAdmin); 
+
+      
+
       top.comments.forEach((comment) => {
         comment.isCurrentUserComment = (
           currentUser &&
           comment.author &&
           (comment.author._id.toString() === currentUser._id.toString())
         );
+      
+       
+        comment.isAdmin = isAdmin;
       });
-
-      const isAdmin = currentUser && currentUser.role === "admin";
-
 
       const moviePromises = top.moviesId.map((movieId) =>
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
@@ -363,29 +368,41 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
     });
 });
 
-
 router.get("/alltops/:topId/delete/:commentId", (req, res, next) => {
   const topId = req.params.topId;
   const commentId = req.params.commentId;
 
-  
   Top.findById(topId)
     .then((top) => {
       if (!top) {
         return res.status(404).send("Top no encontrado");
       }
 
-       if (!top.comments.includes(commentId)) {
+      if (!top.comments.includes(commentId)) {
         return res.status(404).send("Comentario no encontrado en este top");
       }
 
-      Comment.findByIdAndRemove(commentId)
-        .then(() => {
-          top.comments.pull(commentId);
-          return top.save();
-        })
-        .then(() => {
-          res.redirect(`/alltops/${top._id}`);
+      Comment.findById(commentId)
+    .then((comment) => {
+      // Verifica si el usuario actual es un administrador
+      const isAdmin = req.session.currentUser && req.session.currentUser.role === "admin";
+
+      // Verifica si el autor del comentario es el mismo que el usuario actual o si es un administrador
+      if (!isAdmin && comment.author.toString() !== req.session.currentUser._id.toString()) {
+        return res.status(403).send("No tienes permiso para eliminar este comentario");
+      }
+
+          Comment.findByIdAndRemove(commentId)
+            .then(() => {
+              top.comments.pull(commentId);
+              return top.save();
+            })
+            .then(() => {
+              res.redirect(`/alltops/${top._id}`);
+            })
+            .catch((error) => {
+              next(error);
+            });
         })
         .catch((error) => {
           next(error);
@@ -395,6 +412,8 @@ router.get("/alltops/:topId/delete/:commentId", (req, res, next) => {
       next(error);
     });
 });
+
+
 
 
 module.exports = router;

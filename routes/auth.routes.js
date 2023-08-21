@@ -81,6 +81,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
       // Create a user and save it in the database
       return User.create({ username, email, password: hashedPassword, isAdmin });
     })
+    
     .then((user) => {
       Top.create({ owner: user._id }).then((topCreado) => {
         User.findByIdAndUpdate(topCreado.owner, { top: topCreado._id }).then(
