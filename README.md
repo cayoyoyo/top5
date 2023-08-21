@@ -81,10 +81,12 @@ const commentSchema = new Schema(
 | Role    | Description                                                                                                                                                                  |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | User    | Can register, login, and manage their top 5 movie list, explore other users' top lists, and leave comments on them.                                                         |
-| Admin   | Can access all features of a regular user and perform additional actions, like managing movies in the database.                                                             |
+| Admin   | Can access all features of a regular user and perform additional actions, like managing movies in the database.                                                             
 
 
-|## Auth Routes
+
+
+## Auth Routes
 
 | Method | Endpoint          | Middleware     | Action |
 | ------ | ----------------- | -------------- | ------ |
