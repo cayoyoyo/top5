@@ -84,26 +84,30 @@ const commentSchema = new Schema(
 | Admin   | Can access all features of a regular user and perform additional actions, like managing movies in the database.                                                             |
 
 
-| Rutas de Autenticación (auth) | Middleware     | Acción |
-| ---------------------------- | -------------- | ------ |
-| GET /auth/signup              | isLoggedOut    | Renderiza la página de registro. |
-| POST /auth/signup             | isLoggedOut    | Registra al usuario en la base de datos y redirecciona a la página de inicio de sesión. |
-| GET /auth/login               | isLoggedOut    | Renderiza la página de inicio de sesión. |
-| POST /auth/login              | isLoggedOut    | Inicia sesión con un usuario registrado y redirecciona a la página de inicio. |
-| GET /auth/logout              | isLoggedIn     | Cierra la sesión del usuario y redirecciona a la página de inicio. |
+|## Auth Routes
 
-| Rutas de la Página de Inicio (index) | Middleware  | Acción |
-| ----------------------------------- | ----------- | ------ |
-| GET /                               | -           | Renderiza la página de inicio. |
-| GET /perfil                         | isLoggedIn  | Muestra el perfil del usuario con información de las películas en su top. |
-| POST /remove-from-top               | -           | Elimina una película del top del usuario. |
-| GET /search                         | isLoggedIn  | Realiza una búsqueda de películas por nombre. |
-| GET /movies/:id                     | isLoggedIn  | Muestra detalles de una película específica. |
-| POST /add-to-top5                   | isLoggedIn  | Agrega una película al top del usuario. |
-| GET /alltops                        | isLoggedIn  | Muestra una lista de todos los tops. |
-| GET /alltops/:id                    | -           | Muestra detalles de un top específico. |
-| POST /alltops/:id/add-comment       | isLoggedIn  | Agrega un comentario a un top específico. |
-| GET /alltops/:topId/delete/:commentId | -         | Elimina un comentario de un top específico. |
+| Method | Endpoint          | Middleware     | Action |
+| ------ | ----------------- | -------------- | ------ |
+| GET    | /auth/signup      | isLoggedOut    | Renderiza la página de registro. |
+| POST   | /auth/signup      | isLoggedOut    | Registra al usuario en la base de datos y redirecciona a la página de inicio de sesión. |
+| GET    | /auth/login       | isLoggedOut    | Renderiza la página de inicio de sesión. |
+| POST   | /auth/login       | isLoggedOut    | Inicia sesión con un usuario registrado y redirecciona a la página de inicio. |
+| GET    | /auth/logout      | isLoggedIn     | Cierra la sesión del usuario y redirecciona a la página de inicio. |
+
+## Index Routes
+
+| Method | Endpoint          | Middleware     | Action |
+| ------ | ----------------- | -------------- | ------ |
+| GET    | /                 | -              | Renderiza la página de inicio. |
+| GET    | /perfil           | isLoggedIn     | Muestra el perfil del usuario con información de las películas en su top. |
+| POST   | /remove-from-top  | -              | Elimina una película del top del usuario. |
+| GET    | /search           | isLoggedIn     | Realiza una búsqueda de películas por nombre. |
+| GET    | /movies/:id       | isLoggedIn     | Muestra detalles de una película específica. |
+| POST   | /add-to-top5      | isLoggedIn     | Agrega una película al top del usuario. |
+| GET    | /alltops          | isLoggedIn     | Muestra una lista de todos los tops. |
+| GET    | /alltops/:id      | -              | Muestra detalles de un top específico. |
+| POST   | /alltops/:id/add-comment | isLoggedIn | Agrega un comentario a un top específico. |
+| GET    | /alltops/:topId/delete/:commentId | - | Elimina un comentario de un top específico. |
 
 
 
