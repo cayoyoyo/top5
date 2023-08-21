@@ -5,7 +5,7 @@
 Welcome to top5, a web application that allows users to register, create their top 5 favorite movies list, and explore or comment on other users' top lists.
 
 # Deployment
-Puedes jugar al juego [aquí](https://carlos-top5.adaptable.app).
+Go to Top5 [here](https://carlos-top5.adaptable.app).
 
 
 # Installation Guide
