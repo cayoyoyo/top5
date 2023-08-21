@@ -10,36 +10,30 @@
         </div>
       {{/each}}
     </div>
+    
     <div class="comments-section mt-5">
       <h3>Comments</h3>
-    
-      <div class="col-md-8">
+     <div class="col-md-8">
           <ul class="list-group">
          {{#each top.comments}}
           <li class="list-group-item d-flex justify-content-between align-items-center">
            <div class="comment-content">{{this.content}}</div>
            <div class="d-flex align-items-center">
             <div class="mt-2 text-muted"><br><br>by: {{this.author.username}}</div>
+             {{#if isAdmin}}
+                  <a href="/alltops/{{../top._id}}/delete/{{this._id}}" class="btn btn-danger btn-sm mr-2">Delete</a>
+                {{/if}}
            {{#if this.isCurrentUserComment}}
              <a href="/alltops/{{../top._id}}/delete/{{this._id}}" class="btn btn-danger btn-sm mr-2">Delete</a>
            {{/if}}
             </div>
            </li>
          {{/each}}
-
-
-          </ul>
+        </ul>
         </div>
       </div>
-      {{#if isAdmin}} <!-- Verifica si el usuario es administrador -->
-        <div class="row mt-3">
-          <div class="col-md-8">
-            <form action="/alltops/{{top._id}}/delete-all-comments" method="POST">
-              <button type="submit" class="btn btn-danger">Delete All Comments</button>
-            </form>
-          </div>
-        </div>
-      {{/if}}
+    
+    
       <div class="row mt-3">
         <div class="col-md-8">
           <form class="add-comment-form" action="/alltops/{{top._id}}/add-comment" method="POST">

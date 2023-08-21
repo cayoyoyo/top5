@@ -22,7 +22,6 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 // POST /auth/signup
-// POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
   const { username, email, password, confirmPassword, adminPassword } =
     req.body;
@@ -46,13 +45,13 @@ router.post("/signup", isLoggedOut, (req, res) => {
     isAdmin = true;
   }
 
-  // if (password !== confirmPassword) {
-  //   res.status(400).render("auth/signup", {
-  //     errorMessage:
-  //       "Passwords do not match. Please make sure both passwords are the same.",
-  //   });
-  //   return;
-  // }
+  if (password !== confirmPassword) {
+    res.status(400).render("auth/signup", {
+      errorMessage:
+        "Passwords do not match. Please make sure both passwords are the same.",
+    });
+    return;
+  }
 
   if (password.length < 4) {
     res.status(400).render("auth/signup", {
@@ -80,7 +79,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      return User.create({ username, email, password: hashedPassword });
+      return User.create({ username, email, password: hashedPassword, isAdmin });
     })
     .then((user) => {
       Top.create({ owner: user._id }).then((topCreado) => {

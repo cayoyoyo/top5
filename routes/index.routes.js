@@ -11,8 +11,6 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 
-
-/* GET home page */
 router.get("/", (req, res, next) => {
   res.render("index", {
     user: req.session.currentUser,
@@ -32,7 +30,6 @@ router.get("/perfil", isLoggedIn, (req, res, next) => {
         return res.status(404).send("Usuario no encontrado");
       }
 
-      // Obtener la información completa de las películas del top
       const moviePromises = user.top.moviesId.map((movieId) =>
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
           params: {
@@ -41,11 +38,10 @@ router.get("/perfil", isLoggedIn, (req, res, next) => {
         })
       );
 
-      // Ejecutar las solicitudes en paralelo
       Promise.all(moviePromises)
         .then((responses) => {
           const dataMovies = responses.map((response) => response.data);
-          user.top.moviesData = dataMovies; // Almacenar los detalles de las películas en 'moviesData'
+          user.top.moviesData = dataMovies; 
 
           res.render("perfil", { user: user });
         })
@@ -58,7 +54,6 @@ router.post("/remove-from-top", (req, res, next) => {
   const movieIdToRemove = req.body.movieId;
   const userId = req.session.currentUser._id;
 
-  // Buscar el top del usuario actual y eliminar la película del arreglo 'moviesId'
   Top.findOneAndUpdate(
     { owner: userId },
     { $pull: { moviesId: movieIdToRemove } },
@@ -68,28 +63,27 @@ router.post("/remove-from-top", (req, res, next) => {
       if (!updatedTop) {
         return res.status(404).send("Top no encontrado");
       }
-      res.redirect("/perfil"); // Redireccionar a la página del perfil después de eliminar
+      res.redirect("/perfil"); 
     })
     .catch((err) => next(err));
 });
 
 router.get("/search", isLoggedIn, (req, res, next) => {
-  const movieName = req.query.movie; // Obtener el nombre de la película del formulario
+  const movieName = req.query.movie;
 
   router.get("/search", isLoggedIn, (req, res, next) => {
-    const movieName = req.query.movie; // Obtener el nombre de la película del formulario
+    const movieName = req.query.movie; 
   
-    // Verificar si el usuario ingresó un nombre de película válido
+    
     let errorMessage = null;
     if (!movieName) {
       errorMessage = "Por favor, ingresa el nombre de una película.";
     }
   
-    // Renderizar la vista con el mensaje de error (si existe)
     return res.render("index", { user: req.user, movies: null, movie: null, errorMessage: errorMessage });
   });
 
-  // Realizar la búsqueda de películas utilizando el nombre proporcionado
+  
   axios
     .get(`https://api.themoviedb.org/3/search/movie`, {
       params: {
@@ -153,7 +147,7 @@ router.post("/add-to-top5", isLoggedIn, (req, res, next) => {
   console.log(req.session.currentUser);
   const movieId = req.body.movieId;
   let imageUrl;
-  // Obtener la película a partir del movieId utilizando la API de TMDB
+  
   axios
     .get(`https://api.themoviedb.org/3/movie/${movieId}`, {
       params: {
@@ -209,29 +203,24 @@ router.post("/add-to-top5", isLoggedIn, (req, res, next) => {
 });
 
 router.post("/remove-from-top", isLoggedIn, (req, res, next) => {
-  const movieIdToRemove = req.body.movieId; // Asegúrate de que movieIdToRemove tenga un valor válido
+  const movieIdToRemove = req.body.movieId; 
 
-  // Buscar el top del usuario actual en la base de datos
   Top.findOne({ owner: req.session.currentUser._id })
     .then((top) => {
       if (!top) {
         return res.status(404).send("El top no fue encontrado");
       }
 
-      // Encontrar el índice de la película a eliminar en el array moviesId
       const indexToRemove = top.moviesId.indexOf(movieIdToRemove);
       if (indexToRemove === -1) {
         return res.status(404).send("La película no está en el top");
       }
 
-      // Eliminar la película del array moviesId
       top.moviesId.splice(indexToRemove, 1);
 
-      // Guardar el top actualizado en la base de datos
       top
         .save()
         .then(() => {
-          // Redireccionar a la página de perfil después de eliminar la película
           res.redirect("/perfil");
         })
         .catch((err) => next(err));
@@ -298,7 +287,6 @@ router.get("/alltops/:id", (req, res, next) => {
         return res.status(404).send("Top no encontrado");
       }
 
-      // Check if the current user is the owner of the comment
       const currentUser = req.session.currentUser;
 
       top.comments.forEach((comment) => {
@@ -312,7 +300,6 @@ router.get("/alltops/:id", (req, res, next) => {
       const isAdmin = currentUser && currentUser.role === "admin";
 
 
-      // Obtener la información completa de las películas del top
       const moviePromises = top.moviesId.map((movieId) =>
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
           params: {
@@ -321,7 +308,6 @@ router.get("/alltops/:id", (req, res, next) => {
         })
       );
 
-      // Ejecutar las solicitudes en paralelo
       Promise.all(moviePromises)
         .then((responses) => {
           const moviesData = responses.map((response) => response.data);
@@ -344,7 +330,7 @@ router.get("/alltops/:id", (req, res, next) => {
 
 
 router.post("/alltops/:id/add-comment", (req, res, next) => {
-  const userId = req.session.currentUser._id; // Obtener el ID del usuario actual
+  const userId = req.session.currentUser._id; 
   const topId = req.params.id;
 
   Top.findById(topId)
@@ -355,15 +341,15 @@ router.post("/alltops/:id/add-comment", (req, res, next) => {
 
       const newComment = new Comment({
         content: req.body.content,
-        author: userId, // Establecer el autor del comentario como el usuario actual
+        author: userId, 
         top: top._id,
       });
 
       newComment
         .save()
         .then(() => {
-          top.comments.push(newComment._id); // Agregar el ID del comentario al array
-          return top.save(); // Guardar el top actualizado con el nuevo comentario
+          top.comments.push(newComment._id); 
+          return top.save(); 
         })
         .then(() => {
           res.redirect(`/alltops/${top._id}`);
@@ -382,19 +368,17 @@ router.get("/alltops/:topId/delete/:commentId", (req, res, next) => {
   const topId = req.params.topId;
   const commentId = req.params.commentId;
 
-  // Encuentra el top y el comentario correspondiente
+  
   Top.findById(topId)
     .then((top) => {
       if (!top) {
         return res.status(404).send("Top no encontrado");
       }
 
-      // Verifica que el comentario pertenezca al top
-      if (!top.comments.includes(commentId)) {
+       if (!top.comments.includes(commentId)) {
         return res.status(404).send("Comentario no encontrado en este top");
       }
 
-      // Elimina el comentario del top y de la base de datos
       Comment.findByIdAndRemove(commentId)
         .then(() => {
           top.comments.pull(commentId);
